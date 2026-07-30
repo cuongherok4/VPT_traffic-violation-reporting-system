@@ -1,56 +1,56 @@
-# VPT - He Thong Bao Cao Vi Pham Giao Thong
+# VPT - Hệ Thống Báo Cáo Vi Phạm Giao Thông
 
-Du an Laravel dung de tiep nhan bao cao vi pham giao thong tu nguoi dan, ho tro co quan chuc nang xac minh, quan ly muc phat, tra cuu vi pham va cung cap cua hang thiet bi an toan giao thong.
+Dự án Laravel dùng để tiếp nhận báo cáo vi phạm giao thông từ người dân, hỗ trợ cơ quan chức năng xác minh, quản lý mức phạt, tra cứu vi phạm và cung cấp cửa hàng thiết bị an toàn giao thông.
 
-Source ban dau la PHP/MySQL cu. Du an nay duoc rebuild lai theo cau truc Laravel ro rang hon: co migration, model, request validation, service upload anh, API, giao dien Blade, phan quyen admin/citizen va test tu dong.
+Source ban đầu là PHP/MySQL cũ. Dự án này được rebuild lại theo cấu trúc Laravel rõ ràng hơn: có migration, model, request validation, service upload ảnh, API, giao diện Blade, phân quyền admin/citizen và test tự động.
 
-## Anh Demo
+## Ảnh Demo
 
-### Trang chu / Tra cuu vi pham
+### Trang chủ / Tra cứu vi phạm
 
-![Trang tra cuu](public/img/home.png)
+![Trang tra cứu](public/img/home.png)
 
-### Dang nhap
+### Đăng nhập
 
-![Dang nhap](public/img/login.png)
+![Đăng nhập](public/img/login.png)
 
-### Dang ky
+### Đăng ký
 
-![Dang ky](public/img/register.png)
+![Đăng ký](public/img/register.png)
 
-### Gui bao cao vi pham
+### Gửi báo cáo vi phạm
 
-![Gui bao cao](public/img/Submit%20a%20violation%20report.png)
+![Gửi báo cáo](public/img/Submit%20a%20violation%20report.png)
 
-### Danh sach bao cao
+### Danh sách báo cáo
 
-![Danh sach bao cao](public/img/Submit%20a%20violation%20report_list.png)
+![Danh sách báo cáo](public/img/Submit%20a%20violation%20report_list.png)
 
-### Quan ly bao cao
+### Quản lý báo cáo
 
-![Quan ly bao cao](public/img/reports.png)
+![Quản lý báo cáo](public/img/reports.png)
 
-### Cua hang thiet bi an toan
+### Cửa hàng thiết bị an toàn
 
-![Cua hang](public/img/shop.png)
+![Cửa hàng](public/img/shop.png)
 
-## Chuc Nang Chinh
+## Chức Năng Chính
 
-- Nguoi dan dang ky, dang nhap va gui bao cao vi pham giao thong.
-- Upload anh bang chung cho bao cao; local dung `public` storage, production san sang dung AWS S3.
-- Goi y loai hanh vi vi pham khi nguoi dan nhap bao cao.
-- Hien thi muc phat goi y theo tung hanh vi vi pham.
-- Tra cuu vi pham theo ma bao cao hoac bien so xe.
-- Admin xem danh sach bao cao, loc theo trang thai/bien so va cap nhat trang thai xu ly.
-- Admin sua mo ta, muc phat va thay anh bang chung cua bao cao.
-- Admin quan ly san pham cua hang: them, sua, xoa, upload anh, gia va ton kho.
-- Nguoi dan xem cua hang thiet bi an toan va dat mua san pham.
-- API cho auth, report, lookup, fine receipt, notification, product, order, news va statistics.
-- Dashboard thong ke tong quan, khu vuc vi pham nhieu, trang thai xu ly va xu huong theo ngay.
+- Người dân đăng ký, đăng nhập và gửi báo cáo vi phạm giao thông.
+- Upload ảnh bằng chứng cho báo cáo; local dùng `public` storage, production sẵn sàng dùng AWS S3.
+- Gợi ý loại hành vi vi phạm khi người dân nhập báo cáo.
+- Hiển thị mức phạt gợi ý theo từng hành vi vi phạm.
+- Tra cứu vi phạm theo mã báo cáo hoặc biển số xe.
+- Admin xem danh sách báo cáo, lọc theo trạng thái/biển số và cập nhật trạng thái xử lý.
+- Admin sửa mô tả, mức phạt và thay ảnh bằng chứng của báo cáo.
+- Admin quản lý sản phẩm cửa hàng: thêm, sửa, xóa, upload ảnh, giá và tồn kho.
+- Người dân xem cửa hàng thiết bị an toàn và đặt mua sản phẩm.
+- API cho auth, report, lookup, fine receipt, notification, product, order, news và statistics.
+- Dashboard thống kê tổng quan, khu vực vi phạm nhiều, trạng thái xử lý và xu hướng theo ngày.
 
-## Tai Khoan Demo
+## Tài Khoản Demo
 
-Sau khi chay seed:
+Sau khi chạy seed:
 
 ```text
 Admin
@@ -62,7 +62,7 @@ Email: citizen@vpt.local
 Password: password
 ```
 
-## Cong Nghe Su Dung
+## Công Nghệ Sử Dụng
 
 - PHP 8.2
 - Laravel 12
@@ -73,7 +73,7 @@ Password: password
 - PHPUnit
 - Laravel Pint
 
-## Cau Truc Chinh
+## Cấu Trúc Chính
 
 ```text
 app/
@@ -83,7 +83,7 @@ app/
   Models/                Eloquent models
   Services/              Upload/media services
 config/
-  traffic_violations.php Danh sach hanh vi va muc phat goi y
+  traffic_violations.php Danh sách hành vi và mức phạt gợi ý
 database/
   migrations/            Database schema
   seeders/               Demo data
@@ -91,10 +91,10 @@ resources/views/         Blade UI
 routes/
   api.php                API routes
   web.php                Web routes
-legacy-php/              Source cu giu lai de tham khao
+legacy-php/              Source cũ giữ lại để tham khảo
 ```
 
-## Cai Dat Local
+## Cài Đặt Local
 
 ```bash
 composer install
@@ -105,27 +105,27 @@ php artisan storage:link
 php artisan serve
 ```
 
-Mo trinh duyet:
+Mở trình duyệt:
 
 ```text
 http://127.0.0.1:8000
 ```
 
-Neu port `8000` dang ban:
+Nếu port `8000` đang bận:
 
 ```bash
 php artisan serve --host=127.0.0.1 --port=8001
 ```
 
-## Cau Hinh Upload Anh
+## Cấu Hình Upload Ảnh
 
-Mac dinh local co the dung:
+Mặc định local có thể dùng:
 
 ```env
 FILESYSTEM_CLOUD=public
 ```
 
-Khi AWS S3 da san sang, doi lai:
+Khi AWS S3 đã sẵn sàng, đổi lại:
 
 ```env
 FILESYSTEM_CLOUD=s3
@@ -138,20 +138,20 @@ AWS_ENDPOINT=
 AWS_USE_PATH_STYLE_ENDPOINT=false
 ```
 
-Upload duoc dong goi trong:
+Upload được đóng gói trong:
 
 ```text
 App\Services\MediaStorage
 ```
 
-Database chi luu:
+Database chỉ lưu:
 
 ```text
 evidence_path / evidence_url
 image_path / image_url
 ```
 
-## API Tieu Bieu
+## API Tiêu Biểu
 
 ```http
 POST /api/auth/register
@@ -181,20 +181,20 @@ GET /api/statistics/users
 GET /api/statistics/trend
 ```
 
-## Diem Cai Tien So Voi Source Cu
+## Điểm Cải Tiến So Với Source Cũ
 
-- Chuyen code PHP thu cong sang Laravel MVC.
-- Tach ro API controller va Web controller.
-- Them migration va khoa ngoai thay vi thao tac database roi rac.
-- Dung enum cho trang thai bao cao: `pending`, `verified`, `rejected`, `resolved`.
-- Validation nam trong Form Request, controller ngan gon hon.
-- Upload anh qua service rieng, de doi giua local va AWS S3.
-- Tinh tong tien don hang o backend, khong tin gia tu client.
-- Xu ly order bang transaction va tru ton kho an toan.
-- Them role middleware de bao ve route admin.
-- Them test tu dong cho cac workflow quan trong.
+- Chuyển code PHP thủ công sang Laravel MVC.
+- Tách rõ API controller và Web controller.
+- Thêm migration và khóa ngoại thay vì thao tác database rời rạc.
+- Dùng enum cho trạng thái báo cáo: `pending`, `verified`, `rejected`, `resolved`.
+- Validation nằm trong Form Request, controller ngắn gọn hơn.
+- Upload ảnh qua service riêng, dễ đổi giữa local và AWS S3.
+- Tính tổng tiền đơn hàng ở backend, không tin giá từ client.
+- Xử lý order bằng transaction và trừ tồn kho an toàn.
+- Thêm role middleware để bảo vệ route admin.
+- Thêm test tự động cho các workflow quan trọng.
 
-## Kiem Tra Chat Luong
+## Kiểm Tra Chất Lượng
 
 ```bash
 php artisan test
@@ -203,11 +203,11 @@ php artisan view:cache
 php artisan view:clear
 ```
 
-Ket qua gan nhat:
+Kết quả gần nhất:
 
 ```text
-php artisan test --filter=WebFrontendTest
-8 passed
+php artisan test
+35 passed, 141 assertions
 
 vendor/bin/pint
 passed
@@ -215,7 +215,7 @@ passed
 
 ## Git Workflow
 
-Quy trinh lam viec cua du an:
+Quy trình làm việc của dự án:
 
 ```text
 main
@@ -231,10 +231,10 @@ main
         +-- feature/frontend-app
 ```
 
-Quy tac:
+Quy tắc:
 
-- Khong code truc tiep tren `main`.
-- Tinh nang moi lam tren `feature/*`.
-- Merge vao `develop` sau khi test pass.
-- Chi merge `develop` vao `main` khi du an da hoan thien va duoc xac nhan.
-- Theo doi tien do chi tiet trong [TIENDO.md](TIENDO.md).
+- Không code trực tiếp trên `main`.
+- Tính năng mới làm trên `feature/*`.
+- Merge vào `develop` sau khi test pass.
+- Chỉ merge `develop` vào `main` khi dự án đã hoàn thiện và được xác nhận.
+- Theo dõi tiến độ chi tiết trong [TIENDO.md](TIENDO.md).
