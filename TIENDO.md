@@ -16,7 +16,7 @@ Muc tieu: chuyen source PHP/MySQL cu thanh ung dung Laravel co cau truc ro rang,
 | Upload anh AWS S3 | In progress | Da cau hinh code, can bo sung credentials AWS that |
 | Test tu dong | Done | Da co feature tests cho report API va dashboard |
 | UI nguoi dung/admin | Todo | Lam sau khi API on dinh |
-| Auth + phan quyen | Todo | Can them login/register va middleware role |
+| Auth + phan quyen | Done | Da them Sanctum token auth va middleware role |
 
 ## Da Thuc Hien
 
@@ -67,7 +67,16 @@ POST /api/reports
 GET /api/reports/{id}
 PATCH /api/reports/{id}/status
 GET /api/dashboard
+POST /api/auth/register
+POST /api/auth/login
+GET /api/auth/me
+POST /api/auth/logout
 ```
+
+Ghi chu bao mat:
+
+- `PATCH /api/reports/{id}/status` yeu cau `auth:sanctum` va role `admin`.
+- User role `citizen` khong duoc phep duyet/cap nhat trang thai report.
 
 ### 5. AWS S3
 
@@ -119,9 +128,9 @@ php artisan route:list --except-vendor
 
 ### Phase 1: Hoan thien backend nen tang
 
-- Them Laravel auth.
-- Them middleware role: `admin`, `citizen`.
-- Bao ve API cap nhat trang thai chi cho admin.
+- Laravel auth: done.
+- Middleware role `admin`, `citizen`: done.
+- Bao ve API cap nhat trang thai chi cho admin: done.
 - Them Form Request cho product/news/order.
 
 ### Phase 2: Hoan thien upload AWS

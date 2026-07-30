@@ -8,12 +8,14 @@ Laravel application for reporting, reviewing, and tracking traffic violations. T
 - Laravel 12
 - MySQL
 - Laravel Storage + AWS S3
+- Laravel Sanctum
 - Blade, Vite
 - PHPUnit
 
 ## Main Features
 
 - Submit traffic violation reports with optional image evidence.
+- Register, login, logout, and fetch the current API user.
 - Store evidence images on AWS S3 through Laravel Storage.
 - Review reports with clear statuses: `pending`, `verified`, `rejected`, `resolved`.
 - Track fine amounts and reviewer metadata.
@@ -32,6 +34,8 @@ Laravel application for reporting, reviewing, and tracking traffic violations. T
   - `routes/api.php`
 - Upload logic is isolated in `App\Services\MediaStorage`.
 - Validation is handled by Form Request classes, not inside controllers.
+- API authentication uses Laravel Sanctum personal access tokens.
+- Admin-only actions are protected by role middleware.
 - Passwords use Laravel hashing instead of plain text.
 - Dates use timestamp columns instead of varchar fields.
 
@@ -89,6 +93,17 @@ GET /api/reports/{id}
 POST /api/reports
 PATCH /api/reports/{id}/status
 GET /api/dashboard
+POST /api/auth/register
+POST /api/auth/login
+GET /api/auth/me
+POST /api/auth/logout
+```
+
+Admin-only endpoint:
+
+```http
+PATCH /api/reports/{id}/status
+Authorization: Bearer <admin-token>
 ```
 
 Create report example:
