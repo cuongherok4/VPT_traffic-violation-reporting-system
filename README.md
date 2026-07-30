@@ -86,6 +86,14 @@ Storage::disk('s3')
 
 The database stores only the S3 object path and public URL.
 
+Media upload behavior:
+
+- Report evidence is stored under `evidence/`.
+- Product images are stored under `products/`.
+- News images are stored under `news/`.
+- If database write fails after upload, the newly uploaded file is deleted from the configured cloud disk.
+- Automated tests use `Storage::fake('s3')`; real AWS upload requires valid `.env` credentials.
+
 ## API
 
 ```http

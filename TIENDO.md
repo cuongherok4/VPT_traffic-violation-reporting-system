@@ -22,7 +22,7 @@ Muc tieu: rebuild source PHP/MySQL cu thanh ung dung Laravel co cau truc ro rang
 | Rebuild Laravel foundation | `develop` | ✅ Done | `390ce3d refactor: rebuild project with laravel foundation` | Da tao Laravel app va tach legacy |
 | Auth + role guard | `feature/auth-role` | ✅ Done | `67fb42a feat: add api authentication and role guard` | Da them Sanctum + role middleware |
 | Product/news/order API | `feature/catalog-order-api` | ✅ Done | `feat: add catalog and order management api` | Da them catalog/news/order API |
-| AWS S3 upload thuc te | `feature/aws-upload` | ⏳ Todo | `feat: store report evidence on s3` | Can AWS credentials/bucket |
+| AWS S3 upload thuc te | `feature/aws-upload` | ✅ Code done | `feat: harden s3 media uploads` | Code/test xong, upload that cho credentials |
 | User UI | `feature/user-report-ui` | ⏳ Todo | `feat: add citizen report workflow` | Form bao cao, tra cuu |
 | Admin UI | `feature/admin-dashboard-ui` | ⏳ Todo | `feat: add admin report dashboard` | Duyet report, thong ke |
 | Portfolio docs | `docs/portfolio-readiness` | ⏳ Todo | `docs: add portfolio screenshots and erd` | README, screenshot, ERD |
@@ -205,12 +205,12 @@ php artisan test
 
 Branch de xuat: `feature/aws-upload`
 
-Trang thai: ⏳ Todo
+Trang thai: ✅ Code done
 
 Commit de xuat:
 
 ```text
-feat: store report evidence on s3
+feat: harden s3 media uploads
 test: fake s3 storage for evidence uploads
 ```
 
@@ -225,19 +225,25 @@ Checklist can lam:
 - ⏳ Tao AWS S3 bucket.
 - ⏳ Tao IAM user co quyen toi thieu.
 - ⏳ Cau hinh `.env` that.
-- ⏳ Test upload anh report len S3.
-- ⏳ Test upload anh product/news len S3.
-- ⏳ Them file size limit.
-- ⏳ Them MIME validation.
-- ⏳ Xu ly loi upload that bai.
-- ⏳ Rollback DB neu upload/ghi DB loi.
-- ⏳ Them tests voi `Storage::fake('s3')`.
+- ✅ Test upload anh report bang `Storage::fake('s3')`.
+- ✅ Test upload anh product/news bang `Storage::fake('s3')`.
+- ✅ Them file size limit.
+- ✅ Them MIME validation.
+- ✅ Xu ly loi upload that bai bang exception cua disk.
+- ✅ Xoa file da upload neu ghi DB fail.
+- ✅ Them tests voi `Storage::fake('s3')`.
 
 Dieu kien hoan thanh:
 
-- ✅ Upload that len S3 thanh cong.
+- ⏳ Upload that len S3 thanh cong sau khi co credentials.
 - ✅ DB chi luu `*_path` va `*_url`.
 - ✅ Test upload pass.
+
+Ghi chu:
+
+- Code da san sang cho AWS S3 that thong qua `.env`.
+- Chua the test upload that vi chua co `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_BUCKET`.
+- Khi co credentials, can chay test manual voi mot file anh nho qua API `POST /api/reports`.
 
 ## Phase 5: Citizen UI
 

@@ -8,7 +8,9 @@ use App\Models\NewsArticle;
 use App\Services\MediaStorage;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Throwable;
 
 class NewsArticleController extends Controller
 {
@@ -26,14 +28,20 @@ class NewsArticleController extends Controller
     {
         $payload = $request->safe()->except('image');
         $payload['slug'] ??= Str::slug($payload['title']);
+        $storedMedia = null;
 
         if ($request->hasFile('image')) {
-            $file = $media->putNewsImage($request->file('image'));
-            $payload['image_path'] = $file['path'];
-            $payload['image_url'] = $file['url'];
+            $storedMedia = $media->putNewsImage($request->file('image'));
+            $payload += $storedMedia->toColumns('image_path', 'image_url');
         }
 
-        $article = NewsArticle::query()->create($payload);
+        try {
+            $article = DB::transaction(fn () => NewsArticle::query()->create($payload));
+        } catch (Throwable $exception) {
+            $media->delete($storedMedia);
+
+            throw $exception;
+        }
 
         return response()->json($article, 201);
     }
@@ -46,18 +54,24 @@ class NewsArticleController extends Controller
     public function update(UpdateNewsArticleRequest $request, NewsArticle $newsArticle, MediaStorage $media): JsonResponse
     {
         $payload = $request->safe()->except('image');
+        $storedMedia = null;
 
         if (array_key_exists('title', $payload) && ! array_key_exists('slug', $payload)) {
             $payload['slug'] = Str::slug($payload['title']);
         }
 
         if ($request->hasFile('image')) {
-            $file = $media->putNewsImage($request->file('image'));
-            $payload['image_path'] = $file['path'];
-            $payload['image_url'] = $file['url'];
+            $storedMedia = $media->putNewsImage($request->file('image'));
+            $payload += $storedMedia->toColumns('image_path', 'image_url');
         }
 
-        $newsArticle->update($payload);
+        try {
+            DB::transaction(fn () => $newsArticle->update($payload));
+        } catch (Throwable $exception) {
+            $media->delete($storedMedia);
+
+            throw $exception;
+        }
 
         return response()->json($newsArticle->fresh());
     }
