@@ -4,6 +4,26 @@ Du an: VPT Traffic Violation Reporting System
 
 Muc tieu: rebuild source PHP/MySQL cu thanh ung dung Laravel co cau truc ro rang, de bao tri, co test, co phan quyen, upload anh len AWS S3 va co quy trinh Git/GitHub de leader review.
 
+## Nguyen Tac Thuc Hien Moi
+
+| Quy tac | Trang thai | Ghi chu |
+| --- | --- | --- |
+| Backend/API/DB lam truoc | ✅ Bat buoc | Uu tien nghiep vu, validation, test |
+| FE/UI lam cuoi cung | ✅ Bat buoc | Sau khi backend on dinh moi polish giao dien |
+| Moi module co branch rieng | ✅ Bat buoc | Khong tron API va UI trong cung phase neu khong can |
+| Khong push neu user chua dong y | ✅ Bat buoc | Commit local duoc, push phai hoi/xac nhan |
+
+## Scope Nghiep Vu Chinh
+
+| Module | Mo ta | Trang thai |
+| --- | --- | --- |
+| Bao cao vi pham kem hinh anh | Nguoi dan gui thong tin vi pham va tai anh bang chung | ✅ API done |
+| Quan ly bien lai phat va thong bao | Co quan chuc nang nhap bien ban, tien phat va thong bao | ⏳ Dang lam |
+| Tra cuu vi pham | Tra cuu theo ma bao cao, bien so, thong tin ca nhan, trang thai | ⏳ Todo |
+| Mua thiet bi an toan giao thong | San pham, danh muc, don hang | ✅ API done |
+| Thong ke khu vuc vi pham | Xac dinh diem nong giao thong theo dia diem | ✅ API mot phan |
+| Thong ke trang thai xu ly | Thong ke report theo trang thai va user | ✅ API mot phan |
+
 ## Quy Tac Git Bat Buoc
 
 | Quy tac | Trang thai | Ghi chu |
@@ -23,8 +43,11 @@ Muc tieu: rebuild source PHP/MySQL cu thanh ung dung Laravel co cau truc ro rang
 | Auth + role guard | `feature/auth-role` | ✅ Done | `67fb42a feat: add api authentication and role guard` | Da them Sanctum + role middleware |
 | Product/news/order API | `feature/catalog-order-api` | ✅ Done | `feat: add catalog and order management api` | Da them catalog/news/order API |
 | AWS S3 upload thuc te | `feature/aws-upload` | ⏳ Todo | `feat: store report evidence on s3` | Can AWS credentials/bucket |
-| User UI | `feature/user-report-ui` | ⏳ Todo | `feat: add citizen report workflow` | Form bao cao, tra cuu |
-| Admin UI | `feature/admin-dashboard-ui` | ⏳ Todo | `feat: add admin report dashboard` | Duyet report, thong ke |
+| Fine receipt/notification API | `feature/fine-notification` | ✅ Code done | `feat: add fine receipt and notifications` | Backend done, FE sau |
+| Violation lookup API | `feature/violation-lookup` | ⏳ Todo | `feat: add violation lookup api` | Tra cuu backend |
+| User UI | `feature/user-report-ui` | ⏸ De sau | `feat: add citizen report workflow` | FE lam cuoi |
+| Admin UI | `feature/admin-dashboard-ui` | ⏸ De sau | `feat: add admin report dashboard` | FE lam cuoi |
+| Safety shop UI | `feature/safety-shop-ui` | ⏸ De sau | `feat: add safety equipment shop ui` | FE lam cuoi |
 | Portfolio docs | `docs/portfolio-readiness` | ⏳ Todo | `docs: add portfolio screenshots and erd` | README, screenshot, ERD |
 
 ## Branch Flow De Xuat
@@ -37,8 +60,11 @@ main
         +-- feature/auth-role
         +-- feature/catalog-order-api
         +-- feature/aws-upload
+        +-- feature/fine-notification
+        +-- feature/violation-lookup
         +-- feature/user-report-ui
         +-- feature/admin-dashboard-ui
+        +-- feature/safety-shop-ui
         +-- docs/portfolio-readiness
 ```
 
@@ -239,7 +265,55 @@ Dieu kien hoan thanh:
 - ✅ DB chi luu `*_path` va `*_url`.
 - ✅ Test upload pass.
 
-## Phase 5: Citizen UI
+## Phase 5: Fine Receipt And Notification API
+
+Branch de xuat: `feature/fine-notification`
+
+Trang thai: ✅ Code done
+
+Commit de xuat:
+
+```text
+feat: add fine receipt and notifications
+test: cover fine receipt workflow
+```
+
+Muc tieu:
+
+- Co quan chuc nang lap bien lai phat sau khi report duoc xac minh.
+- Luu tien phat, noi dung bien ban, han thanh toan va trang thai thanh toan.
+- Tao thong bao cho cong dan khi co bien lai/trang thai moi.
+
+Checklist can lam:
+
+- ✅ Tao bang `fine_receipts`.
+- ✅ Tao bang `user_notifications`.
+- ✅ Tao model `FineReceipt`.
+- ✅ Tao model `UserNotification`.
+- ✅ Tao API admin tao/xem/cap nhat bien lai.
+- ✅ Tao API citizen xem thong bao cua minh.
+- ✅ Bao ve route admin bang `role:admin`.
+- ✅ Them tests.
+
+Ket qua test rieng:
+
+```text
+php artisan test --filter=FineReceiptApiTest
+4 tests passed, 18 assertions
+```
+
+## Phase 6: Violation Lookup API
+
+Branch de xuat: `feature/violation-lookup`
+
+Trang thai: ⏳ Todo
+
+Muc tieu:
+
+- Tra cuu vi pham theo ma bao cao, bien so, thong tin ca nhan hoac trang thai.
+- Khong ro ri du lieu nhay cam cua nguoi khac.
+
+## Phase 7: Citizen UI
 
 Branch de xuat: `feature/user-report-ui`
 
@@ -277,7 +351,7 @@ Dieu kien hoan thanh:
 - ✅ Citizen xem lai report duoc.
 - ✅ UI responsive.
 
-## Phase 6: Admin UI
+## Phase 8: Admin UI
 
 Branch de xuat: `feature/admin-dashboard-ui`
 
@@ -315,7 +389,17 @@ Dieu kien hoan thanh:
 - ✅ Citizen khong vao admin UI duoc.
 - ✅ Dashboard co so lieu dung.
 
-## Phase 7: Portfolio Readiness
+## Phase 9: Safety Shop UI
+
+Branch de xuat: `feature/safety-shop-ui`
+
+Trang thai: ⏸ De sau
+
+Muc tieu:
+
+- Giao dien mua thiet bi an toan giao thong dua tren API catalog/order da co.
+
+## Phase 10: Portfolio Readiness
 
 Branch de xuat: `docs/portfolio-readiness`
 

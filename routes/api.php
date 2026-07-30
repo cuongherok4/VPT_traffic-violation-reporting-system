@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FineReceiptController;
 use App\Http\Controllers\NewsArticleController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserNotificationController;
 use App\Http\Controllers\ViolationReportController;
 use Illuminate\Support\Facades\Route;
 
@@ -37,9 +39,16 @@ Route::patch('reports/{report}/status', [ViolationReportController::class, 'upda
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('orders', OrderController::class)
         ->only(['index', 'store', 'show']);
+
+    Route::get('notifications', [UserNotificationController::class, 'index']);
+    Route::patch('notifications/{notification}/read', [UserNotificationController::class, 'markAsRead']);
 });
 
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
+    Route::post('reports/{report}/fine-receipt', [FineReceiptController::class, 'store']);
+    Route::get('fine-receipts/{fineReceipt}', [FineReceiptController::class, 'show']);
+    Route::patch('fine-receipts/{fineReceipt}', [FineReceiptController::class, 'update']);
+
     Route::apiResource('categories', ProductCategoryController::class)
         ->only(['store']);
 
