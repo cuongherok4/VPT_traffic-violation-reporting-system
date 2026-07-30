@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Enums\ReportStatus;
+use App\Models\NewsArticle;
+use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\User;
 use App\Models\ViolationReport;
@@ -34,9 +36,39 @@ class DatabaseSeeder extends Seeder
         ]);
 
         ProductCategory::query()->insert([
-            ['name' => 'Mu bao hiem', 'slug' => 'mu-bao-hiem', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Ao mua', 'slug' => 'ao-mua', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Bao hiem xe', 'slug' => 'bao-hiem-xe', 'created_at' => now(), 'updated_at' => now()],
+            ['id' => 1, 'name' => 'Mu bao hiem', 'slug' => 'mu-bao-hiem', 'created_at' => now(), 'updated_at' => now()],
+            ['id' => 2, 'name' => 'Ao mua', 'slug' => 'ao-mua', 'created_at' => now(), 'updated_at' => now()],
+            ['id' => 3, 'name' => 'Bao hiem xe', 'slug' => 'bao-hiem-xe', 'created_at' => now(), 'updated_at' => now()],
+        ]);
+
+        Product::query()->insert([
+            [
+                'category_id' => 1,
+                'name' => 'Mu bao hiem 3/4 dau',
+                'slug' => 'mu-bao-hiem-3-4-dau',
+                'description' => 'Mu bao hiem dat chuan cho di chuyen hang ngay.',
+                'stock' => 20,
+                'price' => 350000,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'category_id' => 2,
+                'name' => 'Ao mua phan quang',
+                'slug' => 'ao-mua-phan-quang',
+                'description' => 'Ao mua co dai phan quang tang kha nang nhan dien ban dem.',
+                'stock' => 15,
+                'price' => 180000,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
+
+        NewsArticle::query()->create([
+            'title' => 'Tang cuong xu ly vi pham qua camera',
+            'slug' => 'tang-cuong-xu-ly-vi-pham-qua-camera',
+            'content' => 'He thong tiep nhan va xu ly bao cao vi pham giao thong giup nang cao y thuc tham gia giao thong.',
+            'published_at' => now(),
         ]);
 
         ViolationReport::query()->create([

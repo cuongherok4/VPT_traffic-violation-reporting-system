@@ -18,6 +18,11 @@ class MediaStorage
         return $this->put($file, 'products');
     }
 
+    public function putNewsImage(UploadedFile $file): array
+    {
+        return $this->put($file, 'news');
+    }
+
     private function put(UploadedFile $file, string $directory): array
     {
         $disk = Storage::disk(config('filesystems.cloud', 's3'));
