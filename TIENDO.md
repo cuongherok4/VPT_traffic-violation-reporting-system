@@ -45,6 +45,7 @@ Muc tieu: rebuild source PHP/MySQL cu thanh ung dung Laravel co cau truc ro rang
 | AWS S3 upload thuc te | `feature/aws-upload` | ⏳ Todo | `feat: store report evidence on s3` | Can AWS credentials/bucket |
 | Fine receipt/notification API | `feature/fine-notification` | ✅ Code done | `feat: add fine receipt and notifications` | Backend done, FE sau |
 | Violation lookup API | `feature/violation-lookup` | ✅ Code done | `feat: add violation lookup api` | Backend done |
+| Report statistics API | `feature/report-statistics` | ✅ Code done | `feat: add report statistics api` | Backend done |
 | User UI | `feature/user-report-ui` | ⏸ De sau | `feat: add citizen report workflow` | FE lam cuoi |
 | Admin UI | `feature/admin-dashboard-ui` | ⏸ De sau | `feat: add admin report dashboard` | FE lam cuoi |
 | Safety shop UI | `feature/safety-shop-ui` | ⏸ De sau | `feat: add safety equipment shop ui` | FE lam cuoi |
@@ -62,6 +63,7 @@ main
         +-- feature/aws-upload
         +-- feature/fine-notification
         +-- feature/violation-lookup
+        +-- feature/report-statistics
         +-- feature/user-report-ui
         +-- feature/admin-dashboard-ui
         +-- feature/safety-shop-ui
@@ -332,7 +334,46 @@ php artisan test --filter=ViolationLookupApiTest
 4 tests passed, 12 assertions
 ```
 
-## Phase 7: Citizen UI
+## Phase 7: Report Statistics API
+
+Branch de xuat: `feature/report-statistics`
+
+Trang thai: ✅ Code done
+
+Commit de xuat:
+
+```text
+feat: add report statistics api
+test: cover report statistics filters
+```
+
+Muc tieu:
+
+- Thong ke khu vuc vi pham nhieu nhat.
+- Thong ke trang thai xu ly.
+- Thong ke trang thai theo user.
+- Loc thong ke theo khoang ngay vi pham.
+
+Checklist can lam:
+
+- ✅ Tao `StatisticsFilterRequest`.
+- ✅ Tao `ReportStatisticsController`.
+- ✅ Them endpoint overview.
+- ✅ Them endpoint locations.
+- ✅ Them endpoint statuses.
+- ✅ Them endpoint users.
+- ✅ Them endpoint trend.
+- ✅ Bao ve route bang `auth:sanctum` va `role:admin`.
+- ✅ Them tests admin-only va du lieu thong ke.
+
+Ket qua test rieng:
+
+```text
+php artisan test --filter=ReportStatisticsApiTest
+5 tests passed, 27 assertions
+```
+
+## Phase 8: Citizen UI
 
 Branch de xuat: `feature/user-report-ui`
 
@@ -370,7 +411,7 @@ Dieu kien hoan thanh:
 - ✅ Citizen xem lai report duoc.
 - ✅ UI responsive.
 
-## Phase 8: Admin UI
+## Phase 9: Admin UI
 
 Branch de xuat: `feature/admin-dashboard-ui`
 
@@ -408,7 +449,7 @@ Dieu kien hoan thanh:
 - ✅ Citizen khong vao admin UI duoc.
 - ✅ Dashboard co so lieu dung.
 
-## Phase 9: Safety Shop UI
+## Phase 10: Safety Shop UI
 
 Branch de xuat: `feature/safety-shop-ui`
 
@@ -418,7 +459,7 @@ Muc tieu:
 
 - Giao dien mua thiet bi an toan giao thong dua tren API catalog/order da co.
 
-## Phase 10: Portfolio Readiness
+## Phase 11: Portfolio Readiness
 
 Branch de xuat: `docs/portfolio-readiness`
 
@@ -488,6 +529,11 @@ Admin only:
 
 ```http
 PATCH /api/reports/{id}/status
+GET /api/statistics/overview
+GET /api/statistics/locations
+GET /api/statistics/statuses
+GET /api/statistics/users
+GET /api/statistics/trend
 POST /api/categories
 POST /api/products
 PATCH /api/products/{id}

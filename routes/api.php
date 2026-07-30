@@ -7,6 +7,7 @@ use App\Http\Controllers\NewsArticleController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReportStatisticsController;
 use App\Http\Controllers\UserNotificationController;
 use App\Http\Controllers\ViolationLookupController;
 use App\Http\Controllers\ViolationReportController;
@@ -48,6 +49,14 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
+    Route::prefix('statistics')->group(function () {
+        Route::get('overview', [ReportStatisticsController::class, 'overview']);
+        Route::get('locations', [ReportStatisticsController::class, 'byLocation']);
+        Route::get('statuses', [ReportStatisticsController::class, 'byStatus']);
+        Route::get('users', [ReportStatisticsController::class, 'byUser']);
+        Route::get('trend', [ReportStatisticsController::class, 'trend']);
+    });
+
     Route::post('reports/{report}/fine-receipt', [FineReceiptController::class, 'store']);
     Route::get('fine-receipts/{fineReceipt}', [FineReceiptController::class, 'show']);
     Route::patch('fine-receipts/{fineReceipt}', [FineReceiptController::class, 'update']);

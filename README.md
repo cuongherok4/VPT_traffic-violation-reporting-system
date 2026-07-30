@@ -22,6 +22,7 @@ Laravel application for reporting, reviewing, and tracking traffic violations. T
 - Issue fine receipts for verified violations.
 - Notify citizens when a fine receipt is created.
 - Lookup violations by report ID, license plate, status, or authenticated email.
+- Admin statistics for overview, high-violation locations, status breakdown, user breakdown, and trends.
 - Track fine amounts and reviewer metadata.
 - Dashboard API for report totals, status breakdown, and top violation locations.
 - Optimized relational database using Laravel migrations and indexes.
@@ -98,6 +99,11 @@ POST /api/reports
 PATCH /api/reports/{id}/status
 GET /api/dashboard
 GET /api/violations/lookup
+GET /api/statistics/overview
+GET /api/statistics/locations
+GET /api/statistics/statuses
+GET /api/statistics/users
+GET /api/statistics/trend
 POST /api/auth/register
 POST /api/auth/login
 GET /api/auth/me
