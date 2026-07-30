@@ -18,6 +18,7 @@ Laravel application for reporting, reviewing, and tracking traffic violations. T
 - Register, login, logout, and fetch the current API user.
 - Store evidence images on AWS S3 through Laravel Storage.
 - Review reports with clear statuses: `pending`, `verified`, `rejected`, `resolved`.
+- Manage product catalog, news articles, and customer orders.
 - Track fine amounts and reviewer metadata.
 - Dashboard API for report totals, status breakdown, and top violation locations.
 - Optimized relational database using Laravel migrations and indexes.
@@ -97,6 +98,14 @@ POST /api/auth/register
 POST /api/auth/login
 GET /api/auth/me
 POST /api/auth/logout
+GET /api/categories
+POST /api/categories
+GET /api/products
+POST /api/products
+GET /api/news-articles
+POST /api/news-articles
+GET /api/orders
+POST /api/orders
 ```
 
 Admin-only endpoint:
@@ -105,6 +114,8 @@ Admin-only endpoint:
 PATCH /api/reports/{id}/status
 Authorization: Bearer <admin-token>
 ```
+
+Order creation is server-authoritative: product price and total amount are calculated from database records, and stock is decremented inside a transaction.
 
 Create report example:
 
