@@ -8,6 +8,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserNotificationController;
+use App\Http\Controllers\ViolationLookupController;
 use App\Http\Controllers\ViolationReportController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,8 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::get('dashboard', DashboardController::class);
+Route::get('violations/lookup', ViolationLookupController::class)
+    ->middleware('optional.auth');
 
 Route::apiResource('categories', ProductCategoryController::class)
     ->only(['index', 'show']);
