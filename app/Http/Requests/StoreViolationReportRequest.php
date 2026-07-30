@@ -22,4 +22,12 @@ class StoreViolationReportRequest extends FormRequest
             'evidence' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'violated_at.before_or_equal' => 'Thời gian xảy ra vi phạm không được lớn hơn thời điểm hiện tại.',
+            'violated_at.date' => 'Thời gian xảy ra vi phạm không hợp lệ.',
+        ];
+    }
 }
