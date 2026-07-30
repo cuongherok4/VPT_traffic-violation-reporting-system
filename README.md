@@ -1,4 +1,4 @@
-# Hệ Thống Quản Lý Vi Phạm Giao Thông
+# VPT Traffic Violation Reporting System
 
 Ứng dụng web hỗ trợ **người dân**, **cơ quan chức năng**, và **quản trị viên** trong việc quản lý vi phạm giao thông, đồng thời cung cấp dịch vụ mua sắm thiết bị an toàn giao thông chính hãng.
 
@@ -56,4 +56,3 @@ TrafficViolationSystem/
 <img width="723" height="683" alt="image" src="https://github.com/user-attachments/assets/9b530336-0371-4aef-88a5-d63a495564fc" />
 <img width="974" height="853" alt="image" src="https://github.com/user-attachments/assets/63babdce-dece-4d0d-aa38-7a98f67ecd4a" />
 <img width="974" height="583" alt="image" src="https://github.com/user-attachments/assets/70d94475-c023-46a3-9922-62f18dd94396" />
-
