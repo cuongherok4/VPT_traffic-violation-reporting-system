@@ -8,7 +8,9 @@ use App\Models\Product;
 use App\Services\MediaStorage;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Throwable;
 
 class ProductController extends Controller
 {
@@ -28,14 +30,20 @@ class ProductController extends Controller
     {
         $payload = $request->safe()->except('image');
         $payload['slug'] ??= Str::slug($payload['name']);
+        $storedMedia = null;
 
         if ($request->hasFile('image')) {
-            $file = $media->putProductImage($request->file('image'));
-            $payload['image_path'] = $file['path'];
-            $payload['image_url'] = $file['url'];
+            $storedMedia = $media->putProductImage($request->file('image'));
+            $payload += $storedMedia->toColumns('image_path', 'image_url');
         }
 
-        $product = Product::query()->create($payload);
+        try {
+            $product = DB::transaction(fn () => Product::query()->create($payload));
+        } catch (Throwable $exception) {
+            $media->delete($storedMedia);
+
+            throw $exception;
+        }
 
         return response()->json($product->load('category:id,name,slug'), 201);
     }
@@ -48,18 +56,24 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, Product $product, MediaStorage $media): JsonResponse
     {
         $payload = $request->safe()->except('image');
+        $storedMedia = null;
 
         if (array_key_exists('name', $payload) && ! array_key_exists('slug', $payload)) {
             $payload['slug'] = Str::slug($payload['name']);
         }
 
         if ($request->hasFile('image')) {
-            $file = $media->putProductImage($request->file('image'));
-            $payload['image_path'] = $file['path'];
-            $payload['image_url'] = $file['url'];
+            $storedMedia = $media->putProductImage($request->file('image'));
+            $payload += $storedMedia->toColumns('image_path', 'image_url');
         }
 
-        $product->update($payload);
+        try {
+            DB::transaction(fn () => $product->update($payload));
+        } catch (Throwable $exception) {
+            $media->delete($storedMedia);
+
+            throw $exception;
+        }
 
         return response()->json($product->fresh()->load('category:id,name,slug'));
     }

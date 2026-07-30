@@ -9,6 +9,8 @@ use App\Models\ViolationReport;
 use App\Services\MediaStorage;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class ViolationReportController extends Controller
 {
@@ -26,17 +28,23 @@ class ViolationReportController extends Controller
     public function store(StoreViolationReportRequest $request, MediaStorage $media): JsonResponse
     {
         $payload = $request->validated();
+        $storedMedia = null;
 
         if ($request->hasFile('evidence')) {
-            $file = $media->putEvidence($request->file('evidence'));
-            $payload['evidence_path'] = $file['path'];
-            $payload['evidence_url'] = $file['url'];
+            $storedMedia = $media->putEvidence($request->file('evidence'));
+            $payload += $storedMedia->toColumns('evidence_path', 'evidence_url');
         }
 
         $payload['reporter_id'] = $request->user()?->id;
         $payload['status'] = ReportStatus::Pending;
 
-        $report = ViolationReport::create($payload);
+        try {
+            $report = DB::transaction(fn () => ViolationReport::query()->create($payload));
+        } catch (Throwable $exception) {
+            $media->delete($storedMedia);
+
+            throw $exception;
+        }
 
         return response()->json($report, 201);
     }
