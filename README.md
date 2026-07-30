@@ -19,6 +19,8 @@ Laravel application for reporting, reviewing, and tracking traffic violations. T
 - Store evidence images on AWS S3 through Laravel Storage.
 - Review reports with clear statuses: `pending`, `verified`, `rejected`, `resolved`.
 - Manage product catalog, news articles, and customer orders.
+- Issue fine receipts for verified violations.
+- Notify citizens when a fine receipt is created.
 - Track fine amounts and reviewer metadata.
 - Dashboard API for report totals, status breakdown, and top violation locations.
 - Optimized relational database using Laravel migrations and indexes.

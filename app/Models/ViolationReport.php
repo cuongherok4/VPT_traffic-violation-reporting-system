@@ -6,6 +6,7 @@ use App\Enums\ReportStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class ViolationReport extends Model
 {
@@ -44,5 +45,10 @@ class ViolationReport extends Model
     public function reviewer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'reviewed_by');
+    }
+
+    public function fineReceipt(): HasOne
+    {
+        return $this->hasOne(FineReceipt::class);
     }
 }
