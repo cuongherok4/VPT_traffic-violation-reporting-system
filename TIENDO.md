@@ -44,7 +44,7 @@ Muc tieu: rebuild source PHP/MySQL cu thanh ung dung Laravel co cau truc ro rang
 | Product/news/order API | `feature/catalog-order-api` | ✅ Done | `feat: add catalog and order management api` | Da them catalog/news/order API |
 | AWS S3 upload thuc te | `feature/aws-upload` | ⏳ Todo | `feat: store report evidence on s3` | Can AWS credentials/bucket |
 | Fine receipt/notification API | `feature/fine-notification` | ✅ Code done | `feat: add fine receipt and notifications` | Backend done, FE sau |
-| Violation lookup API | `feature/violation-lookup` | ⏳ Todo | `feat: add violation lookup api` | Tra cuu backend |
+| Violation lookup API | `feature/violation-lookup` | ✅ Code done | `feat: add violation lookup api` | Backend done |
 | User UI | `feature/user-report-ui` | ⏸ De sau | `feat: add citizen report workflow` | FE lam cuoi |
 | Admin UI | `feature/admin-dashboard-ui` | ⏸ De sau | `feat: add admin report dashboard` | FE lam cuoi |
 | Safety shop UI | `feature/safety-shop-ui` | ⏸ De sau | `feat: add safety equipment shop ui` | FE lam cuoi |
@@ -306,12 +306,31 @@ php artisan test --filter=FineReceiptApiTest
 
 Branch de xuat: `feature/violation-lookup`
 
-Trang thai: ⏳ Todo
+Trang thai: ✅ Code done
 
 Muc tieu:
 
 - Tra cuu vi pham theo ma bao cao, bien so, thong tin ca nhan hoac trang thai.
 - Khong ro ri du lieu nhay cam cua nguoi khac.
+
+Checklist can lam:
+
+- ✅ Tao `ViolationLookupRequest`.
+- ✅ Tao `ViolationLookupController`.
+- ✅ Tao endpoint `GET /api/violations/lookup`.
+- ✅ Public lookup theo `report_id` hoac `license_plate`.
+- ✅ Authenticated lookup theo `email`.
+- ✅ Public response chi tra du lieu an toan.
+- ✅ Owner response tra them mo ta, anh bang chung va thong tin bien lai.
+- ✅ Them optional Sanctum auth middleware.
+- ✅ Them tests chong lo du lieu.
+
+Ket qua test rieng:
+
+```text
+php artisan test --filter=ViolationLookupApiTest
+4 tests passed, 12 assertions
+```
 
 ## Phase 7: Citizen UI
 
