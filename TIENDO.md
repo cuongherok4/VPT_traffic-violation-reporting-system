@@ -18,8 +18,8 @@ Muc tieu: rebuild source PHP/MySQL cu thanh ung dung Laravel co cau truc ro rang
 | Module | Mo ta | Trang thai |
 | --- | --- | --- |
 | Bao cao vi pham kem hinh anh | Nguoi dan gui thong tin vi pham va tai anh bang chung | ✅ API done |
-| Quan ly bien lai phat va thong bao | Co quan chuc nang nhap bien ban, tien phat va thong bao | ⏳ Dang lam |
-| Tra cuu vi pham | Tra cuu theo ma bao cao, bien so, thong tin ca nhan, trang thai | ⏳ Todo |
+| Quan ly bien lai phat va thong bao | Co quan chuc nang nhap bien ban, tien phat va thong bao | ✅ API done |
+| Tra cuu vi pham | Tra cuu theo ma bao cao, bien so, thong tin ca nhan, trang thai | ✅ API done |
 | Mua thiet bi an toan giao thong | San pham, danh muc, don hang | ✅ API done |
 | Thong ke khu vuc vi pham | Xac dinh diem nong giao thong theo dia diem | ✅ API mot phan |
 | Thong ke trang thai xu ly | Thong ke report theo trang thai va user | ✅ API mot phan |
@@ -42,13 +42,14 @@ Muc tieu: rebuild source PHP/MySQL cu thanh ung dung Laravel co cau truc ro rang
 | Rebuild Laravel foundation | `develop` | ✅ Done | `390ce3d refactor: rebuild project with laravel foundation` | Da tao Laravel app va tach legacy |
 | Auth + role guard | `feature/auth-role` | ✅ Done | `67fb42a feat: add api authentication and role guard` | Da them Sanctum + role middleware |
 | Product/news/order API | `feature/catalog-order-api` | ✅ Done | `feat: add catalog and order management api` | Da them catalog/news/order API |
-| AWS S3 upload thuc te | `feature/aws-upload` | ⏳ Todo | `feat: store report evidence on s3` | Can AWS credentials/bucket |
+| AWS S3 upload thuc te | `feature/aws-upload` | ✅ Code done | `259cb3e feat: harden s3 media uploads` | Can AWS credentials/bucket de test that |
 | Fine receipt/notification API | `feature/fine-notification` | ✅ Code done | `feat: add fine receipt and notifications` | Backend done, FE sau |
 | Violation lookup API | `feature/violation-lookup` | ✅ Code done | `feat: add violation lookup api` | Backend done |
 | Report statistics API | `feature/report-statistics` | ✅ Code done | `feat: add report statistics api` | Backend done |
-| User UI | `feature/user-report-ui` | ⏸ De sau | `feat: add citizen report workflow` | FE lam cuoi |
-| Admin UI | `feature/admin-dashboard-ui` | ⏸ De sau | `feat: add admin report dashboard` | FE lam cuoi |
-| Safety shop UI | `feature/safety-shop-ui` | ⏸ De sau | `feat: add safety equipment shop ui` | FE lam cuoi |
+| Frontend app workflow | `feature/frontend-app` | ⏳ Dang lam | `feat: add frontend app workflow` | Blade UI cho citizen, admin, lookup, shop |
+| User UI | `feature/user-report-ui` | ⏸ Tam dung | `feat: add citizen report workflow` | Da tach sang branch FE tong hop |
+| Admin UI | `feature/admin-dashboard-ui` | ⏸ Tam dung | `feat: add admin report dashboard` | Da tach sang branch FE tong hop |
+| Safety shop UI | `feature/safety-shop-ui` | ⏸ Tam dung | `feat: add safety equipment shop ui` | Da tach sang branch FE tong hop |
 | Portfolio docs | `docs/portfolio-readiness` | ⏳ Todo | `docs: add portfolio screenshots and erd` | README, screenshot, ERD |
 
 ## Branch Flow De Xuat
@@ -64,9 +65,7 @@ main
         +-- feature/fine-notification
         +-- feature/violation-lookup
         +-- feature/report-statistics
-        +-- feature/user-report-ui
-        +-- feature/admin-dashboard-ui
-        +-- feature/safety-shop-ui
+        +-- feature/frontend-app
         +-- docs/portfolio-readiness
 ```
 
@@ -233,7 +232,7 @@ php artisan test
 
 Branch de xuat: `feature/aws-upload`
 
-Trang thai: ⏳ Todo
+Trang thai: ✅ Code done
 
 Commit de xuat:
 
@@ -248,18 +247,19 @@ Muc tieu:
 - Luu object path va URL vao database.
 - Khong luu anh user upload trong repo.
 
-Checklist can lam:
+Checklist:
 
 - ⏳ Tao AWS S3 bucket.
 - ⏳ Tao IAM user co quyen toi thieu.
 - ⏳ Cau hinh `.env` that.
-- ⏳ Test upload anh report len S3.
-- ⏳ Test upload anh product/news len S3.
-- ⏳ Them file size limit.
-- ⏳ Them MIME validation.
-- ⏳ Xu ly loi upload that bai.
-- ⏳ Rollback DB neu upload/ghi DB loi.
-- ⏳ Them tests voi `Storage::fake('s3')`.
+- ⏳ Test upload anh report len S3 that.
+- ✅ Anh report luu qua storage service.
+- ✅ DB luu `evidence_path` va `evidence_url`.
+- ✅ Them file size limit.
+- ✅ Them MIME validation.
+- ✅ Xu ly loi upload that bai.
+- ✅ Rollback DB neu upload/ghi DB loi.
+- ✅ Them tests voi fake storage.
 
 Dieu kien hoan thanh:
 
@@ -373,11 +373,59 @@ php artisan test --filter=ReportStatisticsApiTest
 5 tests passed, 27 assertions
 ```
 
-## Phase 8: Citizen UI
+## Phase 8: Frontend App Workflow
+
+Branch dang dung: `feature/frontend-app`
+
+Trang thai: ⏳ Dang lam
+
+Commit de xuat:
+
+```text
+feat: add frontend app workflow
+test: cover web frontend workflows
+```
+
+Muc tieu:
+
+- Tao Blade UI tach rieng sau khi backend da on dinh.
+- Gom citizen report, public lookup, safety shop va admin dashboard trong mot frontend workflow nhat quan.
+- Giu logic nghiep vu o backend/controller; view chi render form, table, state.
+
+Checklist:
+
+- ✅ Tao layout Blade chung: `resources/views/components/layouts/app.blade.php`.
+- ✅ Tao route web cho auth, lookup, report, shop, admin.
+- ✅ Tao controller web rieng trong `App\Http\Controllers\Web`.
+- ✅ Tao trang dang nhap/dang ky.
+- ✅ Tao trang tra cuu vi pham public.
+- ✅ Tao form citizen gui bao cao co upload anh.
+- ✅ Tao trang citizen xem danh sach/chi tiet bao cao.
+- ✅ Tao trang shop xem san pham va dat hang.
+- ✅ Tao admin dashboard tong quan, diem nong, report moi.
+- ✅ Tao trang admin loc/xem/cap nhat bao cao.
+- ✅ Them test web frontend workflow.
+- ✅ Chay `php artisan test`.
+- ✅ Chay `vendor/bin/pint`.
+- ⏳ Chup/kiem tra UI thuc te tren trinh duyet neu can screenshot portfolio.
+- ⏳ Push branch khi user dong y.
+- ⏳ Mo PR vao `develop`, khong merge vao `main`.
+
+Ket qua test hien tai:
+
+```text
+php artisan test
+32 tests passed, 114 assertions
+
+vendor/bin/pint
+passed
+```
+
+## Phase 9: Citizen UI
 
 Branch de xuat: `feature/user-report-ui`
 
-Trang thai: ⏳ Todo
+Trang thai: ✅ Gop trong `feature/frontend-app`
 
 Commit de xuat:
 
@@ -411,11 +459,11 @@ Dieu kien hoan thanh:
 - ✅ Citizen xem lai report duoc.
 - ✅ UI responsive.
 
-## Phase 9: Admin UI
+## Phase 10: Admin UI
 
 Branch de xuat: `feature/admin-dashboard-ui`
 
-Trang thai: ⏳ Todo
+Trang thai: ✅ Gop trong `feature/frontend-app`
 
 Commit de xuat:
 
@@ -449,17 +497,17 @@ Dieu kien hoan thanh:
 - ✅ Citizen khong vao admin UI duoc.
 - ✅ Dashboard co so lieu dung.
 
-## Phase 10: Safety Shop UI
+## Phase 11: Safety Shop UI
 
 Branch de xuat: `feature/safety-shop-ui`
 
-Trang thai: ⏸ De sau
+Trang thai: ✅ Gop trong `feature/frontend-app`
 
 Muc tieu:
 
 - Giao dien mua thiet bi an toan giao thong dua tren API catalog/order da co.
 
-## Phase 11: Portfolio Readiness
+## Phase 12: Portfolio Readiness
 
 Branch de xuat: `docs/portfolio-readiness`
 
